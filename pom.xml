@@ -1,9 +1,13 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.sonatype.oss</groupId>
+		<artifactId>oss-parent</artifactId>
+		<version>7</version>
+	</parent>
 	<groupId>nz.co.senanque</groupId>
 	<artifactId>madura-ampq</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<name>madura-ampq</name>
 	<description>Support for Spring configuration and AMPQ</description>
 	<properties>
@@ -19,6 +23,29 @@
 		<timestamp>${maven.build.timestamp}</timestamp>
 		<maven.build.timestamp.format>yyyy-MM-dd HH:mm:ss</maven.build.timestamp.format>
 	</properties>
+	<organization>
+		<name>Prometheus Consulting</name>
+		<url>www.madurasoftware.com</url>
+	</organization>
+	<developers>
+		<developer>
+			<id>roger</id>
+			<name>Roger J Parkinson</name>
+			<email>roger.parkinson35 at gmail.com</email>
+			<timezone>GMT+12</timezone>
+			<roles>
+			</roles>
+		</developer>
+	</developers>
+	<scm>
+		<connection>scm:git:git@github.com:RogerParkinson/madura-ampq.git</connection>
+		<developerConnection>scm:git:git@github.com:RogerParkinson/madura-ampq.git</developerConnection>
+		<url>scm:git:git@github.com:RogerParkinson/madura-ampq.git</url>
+	</scm>
+	<issueManagement>
+		<system>GitHub</system>
+		<url>https://github.com/RogerParkinson/madura-ampq/issues</url>
+	</issueManagement>
 	<dependencies>
 		<dependency>
 			<groupId>org.logback-extensions</groupId>
