@@ -81,12 +81,15 @@ public class AMPQRegistrar implements ImportBeanDefinitionRegistrar/*,ResourceLo
 				for (Resource resource : resources) {
 					if (resource.isReadable()) {
 						MetadataReader metadataReader = m_metadataReaderFactory.getMetadataReader(resource);
+//						String className = mm.getDeclaringClassName(); //TODO no package and we need one
+						String className = metadataReader.getClassMetadata().getClassName();
+						String beanName = getBeanName(definitionMap,className,registry);
+						if (beanName == null) {
+							continue;
+						}
 						Set<MethodMetadata> methods = metadataReader.getAnnotationMetadata().getAnnotatedMethods("nz.co.senanque.madura.ampq.AMPQReceiver");
 						for (MethodMetadata mm : methods) {
 							String methodName = mm.getMethodName();
-							String className = mm.getDeclaringClassName(); //TODO no package and we need one
-							className = metadataReader.getClassMetadata().getClassName();
-							String beanName = getBeanName(definitionMap,className,registry);
 							MultiValueMap<String, Object> a = mm.getAllAnnotationAttributes("nz.co.senanque.madura.ampq.AMPQReceiver");
 							List<Object> queueNameList = a.get("queueName");
 							String queueName = (String)queueNameList.get(0);
@@ -177,6 +180,9 @@ public class AMPQRegistrar implements ImportBeanDefinitionRegistrar/*,ResourceLo
 			if (beanType.equals(beanClassName)) {
 				ret.add(map.get(beanDefinition));
 			}
+		}
+		if (ret.size() == 0) {
+			return null;
 		}
 		Assert.isTrue(ret.size() == 1,"There must be exactly one bean of type "+beanType+", found "+ret.size());
 		return ret.get(0);
