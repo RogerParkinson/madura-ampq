@@ -170,18 +170,22 @@ public class AMPQRegistrar implements ImportBeanDefinitionRegistrar/*,ResourceLo
 		return ret;
 	}
 	private String getBeanName(Map<BeanDefinition,String> map, String beanType, BeanDefinitionRegistry registry) {
+		m_logger.debug("getBeanName for: {}",beanType);
 		List<String> ret = new ArrayList<String>();
 		for (BeanDefinition beanDefinition: map.keySet()) {
 			String beanClassName = beanDefinition.getBeanClassName();
 			if (beanClassName == null) {
 				// assume we have a factory of some kind
 				beanClassName = getFactoryType(registry,beanDefinition.getFactoryBeanName(),beanDefinition.getFactoryMethodName());
+				m_logger.debug("beanFactoryType: {} beanDefinition: {}",beanClassName,beanDefinition.getFactoryBeanName());
+
 			}
 			if (beanType.equals(beanClassName)) {
 				ret.add(map.get(beanDefinition));
+				m_logger.debug("beanType: {} beanDefinition: {}",beanType,beanDefinition);
 			}
 		}
-		if (ret.size() == 0) {
+		if (ret.size() != 1 ) {
 			return null;
 		}
 		Assert.isTrue(ret.size() == 1,"There must be exactly one bean of type "+beanType+", found "+ret.size());
