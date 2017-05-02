@@ -92,7 +92,15 @@ public class AMPQRegistrar implements ImportBeanDefinitionRegistrar/*,ResourceLo
 							String methodName = mm.getMethodName();
 							MultiValueMap<String, Object> a = mm.getAllAnnotationAttributes("nz.co.senanque.madura.ampq.AMPQReceiver");
 							List<Object> queueNameList = a.get("queueName");
+							if (queueNameList == null || queueNameList.isEmpty()) {
+								throw new RuntimeException("no queue name found on AMPQReceiver");
+							}
 							String queueName = (String)queueNameList.get(0);
+							String autoStartup = "true";
+							List<Object> autoStartupList = a.get("autoStartup");
+							if (autoStartupList != null && !autoStartupList.isEmpty()) {
+								autoStartup = (String)autoStartupList.get(0);
+							}
 							String listenerAdapterClassName = getImportedAttributeValue(mm.getAllAnnotationAttributes("nz.co.senanque.madura.ampq.AMPQReceiver"),"listenerAdapter");
 							if (StringUtils.isEmpty(listenerAdapterClassName)) {
 								listenerAdapterClassName = getImportedAttributeValue(importedAttributes,"listenerAdapter");
@@ -109,7 +117,7 @@ public class AMPQRegistrar implements ImportBeanDefinitionRegistrar/*,ResourceLo
 								listenerContainerClassName = getImportedAttributeValue(importedAttributes,"listenerContainer");
 							}
 							BeanDefinition messageListenerContainerDefinition = createSimpleMessageListenerContainer(
-									messageListenerAdapterBeanName, connectionFactoryBeanName, queueName,listenerContainerClassName);
+									messageListenerAdapterBeanName, connectionFactoryBeanName, queueName,listenerContainerClassName,autoStartup);
 							String messageListenerContainerBeanName = BeanDefinitionReaderUtils.generateBeanName(messageListenerContainerDefinition,registry,false);
 							BeanDefinitionHolder messageListenerContainerHolder = new BeanDefinitionHolder(messageListenerContainerDefinition, messageListenerContainerBeanName);
 							m_logger.debug("Registering bean name: {} definition: {}",beanName,messageListenerContainerDefinition);
@@ -145,7 +153,8 @@ public class AMPQRegistrar implements ImportBeanDefinitionRegistrar/*,ResourceLo
 	private BeanDefinition createSimpleMessageListenerContainer(
 			String messageListenerAdapterBeanName, 
 			String connectionFactoryBeanName, 
-			String queueName, String listenerContainerClassName) {
+			String queueName, String listenerContainerClassName,
+			String autoStartup) {
 		Class<?> listenerContainerClass;
 		try {
 			listenerContainerClass = Class.forName(listenerContainerClassName);
@@ -156,6 +165,7 @@ public class AMPQRegistrar implements ImportBeanDefinitionRegistrar/*,ResourceLo
 		beanDefinitionBuilder.addPropertyReference("ConnectionFactory", connectionFactoryBeanName);
 		beanDefinitionBuilder.addPropertyReference("MessageListener", messageListenerAdapterBeanName);
 		beanDefinitionBuilder.addPropertyValue("QueueNames", queueName);
+		beanDefinitionBuilder.addPropertyValue("autoStartup", autoStartup);
 		BeanDefinition beanDefinition = beanDefinitionBuilder.getBeanDefinition();
 		return beanDefinition;
 	}

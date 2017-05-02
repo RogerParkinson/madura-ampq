@@ -18,5 +18,6 @@ public @interface AMPQReceiver {
 	String queueName();
 	String listenerContainer() default "";
 	String listenerAdapter() default "";
+	String autoStartup() default "true";
 	
 }

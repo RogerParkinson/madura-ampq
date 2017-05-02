@@ -92,6 +92,9 @@ Just replace the 'abc' etc with the class names you want.
 
 You can also add the listenerContainer and/or listenerAdapter to the @AMPQReceiver annotation which will override the classes for just that receiver. Though be aware that if your replacement classes need extra properties injected then they won't work (though let us know what you need and we'll try and add it).
 
+The @AMPQReceiver also takes `autoStartup="true"` which determines it's startup behaviour. To start/stop queues manually use the QueueController bean.
+
+
 Release notes:
 --
 0.0.2 allow no registered bean even though we find one annotated with @AMPQReceiver. This is for cases using @Profile to eliminate some beans.
