@@ -7,7 +7,7 @@
 	</parent>
 	<groupId>nz.co.senanque</groupId>
 	<artifactId>madura-ampq</artifactId>
-	<version>0.0.5-SNAPSHOT</version>
+	<version>0.0.5</version>
 	<name>madura-ampq</name>
 	<description>Support for Spring configuration and AMPQ</description>
 	<properties>
