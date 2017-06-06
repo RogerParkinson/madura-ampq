@@ -9,7 +9,7 @@ Background
 
 Example Configuration
 ---
-This is using Spring Config to configure an application that uses AMPQ: 
+This is using Spring Config to configure an application that uses AMPQ:
 
 ```
 @Configuration
