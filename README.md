@@ -1,5 +1,8 @@
 madura-ampq
 ===
+
+[ ![Codeship Status for RogerParkinson/madura-ampq](https://app.codeship.com/projects/b39e4dc0-2c8e-0135-78c6-2617786bf7cc/status?branch=master)](https://app.codeship.com/projects/224364)
+
 Background
 ----
 [AMPQ](https://en.wikipedia.org/wiki/Advanced_Message_Queuing_Protocol) is a middleware protocol supported by [Spring Framework](https://spring.io/understanding/AMQP) in a similar way to JMS. Except that configuring an AMPQ application is more complex than JMS. This project aims to simplify it a little. The specific AMPQ engine used here is RabbitMQ but you can configure it to use others.
