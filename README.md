@@ -2,6 +2,7 @@ madura-ampq
 ===
 
 [ ![Codeship Status for RogerParkinson/madura-ampq](https://app.codeship.com/projects/b39e4dc0-2c8e-0135-78c6-2617786bf7cc/status?branch=master)](https://app.codeship.com/projects/224364)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/nz.co.senanque/madura-ampq/badge.svg)](http://mvnrepository.com/artifact/nz.co.senanque/madura-ampq)
 
 Background
 ----
