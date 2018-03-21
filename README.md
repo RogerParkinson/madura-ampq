@@ -2,7 +2,8 @@ madura-ampq
 ===
 
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/nz.co.senanque/madura-ampq/badge.svg)](http://mvnrepository.com/artifact/nz.co.senanque/madura-ampq)
-[![build_status](https://travis-ci.org/phillip-kruger/apiee.svg?branch=master)](https://travis-ci.org/phillip-kruger/apiee)
+
+[![build_status](https://travis-ci.org/RogerParkinson/madura-ampq.svg?branch=master)](https://travis-ci.org/RogerParkinson/madura-ampq)
 
 Background
 ----
