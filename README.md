@@ -1,8 +1,8 @@
 madura-ampq
 ===
 
-[ ![Codeship Status for RogerParkinson/madura-ampq](https://app.codeship.com/projects/b39e4dc0-2c8e-0135-78c6-2617786bf7cc/status?branch=master)](https://app.codeship.com/projects/224364)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/nz.co.senanque/madura-ampq/badge.svg)](http://mvnrepository.com/artifact/nz.co.senanque/madura-ampq)
+[![build_status](https://travis-ci.org/phillip-kruger/apiee.svg?branch=master)](https://travis-ci.org/phillip-kruger/apiee)
 
 Background
 ----
@@ -102,5 +102,6 @@ The @AMPQReceiver also takes `autoStartup="true"` which determines it's startup 
 Release notes:
 --
 0.0.2 allow no registered bean even though we find one annotated with @AMPQReceiver. This is for cases using @Profile to eliminate some beans.
+
 0.0.1 Initial version
 
