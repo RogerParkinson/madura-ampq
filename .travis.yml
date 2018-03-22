@@ -13,7 +13,8 @@ install:
     mvn --settings travis/settings.xml install -DskipTests=true -Dgpg.skip -Dmaven.javadoc.skip=true -B -V
 
 ## Build and release to maven central  
-script: 
+script:
+    mvn versions:set -DnewVersion=${TRAVIS_TAG} 
     mvn clean deploy --settings travis/settings.xml -DskipTests=true -B -U -Prelease
 
 ## Get the project version
