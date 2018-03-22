@@ -1,13 +1,23 @@
 language: java
 jdk: oraclejdk8
+
 install:
     mvn --settings travis/settings.xml install -DskipTests=true -Dgpg.skip -Dmaven.javadoc.skip=true -B -V
 
+## export GPG details
 before_install:
     - echo $GPG_SECRET_KEYS | base64 --decode | gpg --import
     - echo $GPG_OWNERTRUST | base64 --decode | gpg --import-ownertrust
-deploy:
-  provider: script
-  script: make travis-deploy
-  on:
-    tags: true
+
+install:
+    mvn --settings travis/settings.xml install -DskipTests=true -Dgpg.skip -Dmaven.javadoc.skip=true -B -V
+
+## Build and release to maven central  
+script: 
+    mvn clean deploy --settings travis/settings.xml -DskipTests=true -B -U -Prelease
+
+## Get the project version
+before_deploy:
+    - mvn help:evaluate -N -Dexpression=project.version|grep -v '\['
+    - export project_version=$(mvn help:evaluate -N -Dexpression=project.version|grep -v '\[')
+
