@@ -25,4 +25,7 @@ deploy:
   skip_cleanup: true
   on:
     repo: RogerParkinson/madura-ampq
+    branches: 
+      only:
+        - master
   name: $project_version
