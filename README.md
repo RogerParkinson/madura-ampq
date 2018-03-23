@@ -102,6 +102,8 @@ The @AMPQReceiver also takes `autoStartup="true"` which determines it's startup 
 
 Release notes:
 --
+0.0.15 got travis build working
+
 0.0.2 allow no registered bean even though we find one annotated with @AMPQReceiver. This is for cases using @Profile to eliminate some beans.
 
 0.0.1 Initial version
