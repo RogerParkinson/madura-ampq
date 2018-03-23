@@ -1,30 +1,28 @@
 language: java
 jdk: oraclejdk8
-
-install:
-    mvn --settings travis/settings.xml install -DskipTests=true -Dgpg.skip -Dmaven.javadoc.skip=true -B -V
-
-## export GPG details
+install: mvn --settings travis/settings.xml install -DskipTests=true -Dgpg.skip -Dmaven.javadoc.skip=true
+  -B -V
 before_install:
-    - echo $GPG_SECRET_KEYS | base64 --decode | gpg --import
-    - echo $GPG_OWNERTRUST | base64 --decode | gpg --import-ownertrust
+- echo $GPG_SECRET_KEYS | base64 --decode | gpg --import
+- echo $GPG_OWNERTRUST | base64 --decode | gpg --import-ownertrust
 
-install:
-    mvn --settings travis/settings.xml install -DskipTests=true -Dgpg.skip -Dmaven.javadoc.skip=true -B -V
+before_deploy:
+  - mvn help:evaluate -N -Dexpression=project.version|grep -v '\['
+  - export project_version=$(mvn help:evaluate -N -Dexpression=project.version|grep -v '\[')
 
-## Build and release to maven central  
-##script:
-##    mvn versions:set -DnewVersion=${TRAVIS_TAG} 
-##    mvn clean deploy --settings travis/settings.xml -DskipTests=true -B -U -Prelease
+## Build and release to maven central
+script:
+    mvn clean deploy --settings travis/settings.xml -DskipTests=true -B -U -Prelease
 
-## Get the project version
-##before_deploy:
-##    - mvn help:evaluate -N -Dexpression=project.version|grep -v '\['
-##    - export project_version=$(mvn help:evaluate -N -Dexpression=project.version|grep -v '\[')
-
-script: make build
 deploy:
-  provider: script
-  script: make travis-deploy
+  provider: releases
+  api_key:
+    secure: i7OkcqcykrgAUqQqFXdUNiOQv4yCC3PM4nEPu7/gtL1qFPhBPVYjnvKtQFvgY5aRDwTJgTBuabZpVA+NZmw88ku9kwiV8g4Tq+bD4dfKbQsVMGk8R5deL3iWSF6KglcT4+2razymltAWDEUNoK8sHra74zVElUEyMhuV6AK+pR3Fdtp+MazXPLysP/9vmkgqjSMGi/9nS7cgaC5WsUl75W0uCKNuynnXsYVllNw1BpBu6hVoai8xr/77R0Z4cJ9Sillx4+awwKkdJHuklgyFc8jnrgGae9CN+Cq7CfTY3KLslTEQvwExPrQdm2EM0cRqftXnX01cUHaU4dqYMI8XCuqxMCYwldseFMKLeQEDZWrQNQPJ/U/XzwRmin9v5JiaZijDP7Qy/RUN/TQNHeLRxeFHRIYW11z4W2lPdXIGg0t+WAf5OCt+Zkk5n/7Hd9vyb7PMaV1U7Zn+awafvaRVoO3hqxsw7oB/D+G70h0AZYYDwl7GjodMk6HgS8CBUg2b0cZBewhI/YKIUVgJPE+Y+UXP4/ijnTlFiilHvKt1Ev2HV/XZzQuul0toZDQJ1m8op2fpZd+WMO4WFHYGcNU0w1a/Pe2Qr3nwtq12JLC2c3q+/iAoX9sLlHjDsZbZnUdwjf2re39elo9D8C6Zqag5/zNxyDgA6obkGXlaacXKsKk=
+  file: 
+     - madura-ampq/target/madura-ampq-$project_version-javadoc.jar
+     - madura-ampq/target/madura-ampq-$project_version-sources.jar
+     - madura-ampq/target/madura-ampq-$project_version.jar
+  skip_cleanup: true
   on:
-    tags: true
+    repo: RogerParkinson/madura-ampq
+  name: $project_version
